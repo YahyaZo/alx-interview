@@ -1,7 +1,14 @@
 #!/usr/bin/python3
+"""
+Module for log parsing script.
+Reads from stdin and computes metrics.
+"""
+
+
 import sys
 import signal
 import re
+
 
 # Initialize counters and accumulators
 total_file_size = 0
@@ -21,6 +28,8 @@ line_count = 0
 log_pattern = re.compile(
     r'^\d+\.\d+\.\d+\.\d+ - \[.+\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$')
 
+
+
 def print_stats():
     """Prints the accumulated statistics."""
     print(f"File size: {total_file_size}")
@@ -28,10 +37,13 @@ def print_stats():
         if status_code_counts[code] > 0:
             print(f"{code}: {status_code_counts[code]}")
 
+
 def signal_handler(sig, frame):
     """Handles the keyboard interruption signal."""
     print_stats()
     sys.exit(0)
+
+
 
 # Set up the signal handler for keyboard interruption
 signal.signal(signal.SIGINT, signal_handler)
