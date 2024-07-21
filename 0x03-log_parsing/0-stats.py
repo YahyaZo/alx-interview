@@ -10,6 +10,7 @@ import signal
 import re
 
 
+
 # Initialize counters and accumulators
 total_file_size = 0
 status_code_counts = {
@@ -24,9 +25,11 @@ status_code_counts = {
 }
 line_count = 0
 
+
 # Regular expression to match the log line format
 log_pattern = re.compile(
     r'^\d+\.\d+\.\d+\.\d+ - \[.+\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$')
+
 
 
 
@@ -38,6 +41,7 @@ def print_stats():
             print(f"{code}: {status_code_counts[code]}")
 
 
+
 def signal_handler(sig, frame):
     """Handles the keyboard interruption signal."""
     print_stats()
@@ -47,6 +51,7 @@ def signal_handler(sig, frame):
 
 # Set up the signal handler for keyboard interruption
 signal.signal(signal.SIGINT, signal_handler)
+
 
 try:
     for line in sys.stdin:
@@ -63,6 +68,7 @@ try:
             line_count = 0
 except Exception as e:
     sys.stderr.write(f"Error: {str(e)}\n")
+
 
 # Print remaining statistics at the end
 print_stats()
